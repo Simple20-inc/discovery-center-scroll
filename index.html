@@ -238,9 +238,11 @@ function frame(ms){
   /* top line: word by word, then leaves */
   spans.forEach((s,i) => { const a = seg(p, .01 + i*.012, .03 + i*.012); const out = seg(p, .86, .92); s.style.opacity = (a*(1-out)).toFixed(2); s.style.transform = "translateY(" + (14*(1-a)).toFixed(1) + "px)"; });
   $("#scrollcue").style.opacity = (1 - seg(Ps, .01, .03)).toFixed(2);
-  $("#endline").style.opacity = seg(p, .92, .97).toFixed(2);
-  /* the ask arrives with the endline, not before the story */
-  const cto = seg(p, .92, .97), ctaEl = $("#cta");
+  $("#endline").style.opacity = seg(Ps, .905, .96).toFixed(2);
+  /* the ask arrives with the endline, not before the story — and only on the last frame:
+     both are driven on raw track depth so they open with the completed closing row
+     (row reaches full at Ps .905), never during the boy's scene */
+  const cto = seg(Ps, .905, .96), ctaEl = $("#cta");
   ctaEl.style.opacity = cto.toFixed(2); ctaEl.style.visibility = cto <= 0 ? "hidden" : "visible"; ctaEl.style.pointerEvents = cto < .5 ? "none" : "auto";
 
   /* the big word behind the scene */
