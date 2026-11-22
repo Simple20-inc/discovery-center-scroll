@@ -34,7 +34,7 @@
     <div id="back"></div>
     <div id="word" aria-hidden="true"></div>
 
-    <svg id="scene" viewBox="20 110 350 610" preserveAspectRatio="xMidYMax slice" role="img" aria-label="A small boy sits at a chess table too tall for him. His sneakers swing under the table, then slow, then hang still as the game takes hold of him.">
+    <svg id="scene" viewBox="20 60 350 660" preserveAspectRatio="xMidYMax slice" role="img" aria-label="A small boy sits at a chess table too tall for him. His sneakers swing under the table, then slow, then hang still as the game takes hold of him.">
       <defs><clipPath id="ctaClear" clipPathUnits="userSpaceOnUse"><rect x="-700" y="615" width="756" height="120"/><rect x="337" y="615" width="963" height="120"/></clipPath></defs>
       <g id="world">
         <!-- floor with painted swirls -->
@@ -309,7 +309,7 @@ function frame(ms){
 /* wide screens: reframe so the protagonist stays in frame (SC-8 repair) */
 function fitScene(){ const scEl = $("#scene"), a = window.innerWidth / Math.max(1, window.innerHeight);
   if(a >= .85){ const H = 485, W = H * a, cx = 105; scEl.setAttribute("viewBox", (cx - W/2).toFixed(1) + " 215 " + W.toFixed(1) + " " + H); $("#row").setAttribute("transform", "translate(-91,44)"); $("#rowWaves").setAttribute("clip-path", "url(#ctaClear)"); $("#rowWaves").setAttribute("transform", "translate(0,-44)"); }
-  else { scEl.setAttribute("viewBox", "20 110 350 610"); $("#row").setAttribute("transform", "translate(0,-62)"); $("#rowWaves").removeAttribute("clip-path"); $("#rowWaves").removeAttribute("transform"); } }
+  else { scEl.setAttribute("viewBox", "20 60 350 660"); $("#row").setAttribute("transform", "translate(0,-96)"); $("#rowWaves").removeAttribute("clip-path"); $("#rowWaves").removeAttribute("transform"); } }
 window.addEventListener("resize", fitScene); fitScene();
 
 readScroll(); requestAnimationFrame(frame);
