@@ -309,8 +309,18 @@ function frame(ms){
 /* wide screens: reframe so the protagonist stays in frame (SC-8 repair) */
 function fitScene(){ const scEl = $("#scene"), a = window.innerWidth / Math.max(1, window.innerHeight);
   if(a >= .85){ const H = 485, W = H * a, cx = 105; scEl.setAttribute("viewBox", (cx - W/2).toFixed(1) + " 215 " + W.toFixed(1) + " " + H); $("#row").setAttribute("transform", "translate(-91,44)"); $("#rowWaves").setAttribute("clip-path", "url(#ctaClear)"); $("#rowWaves").setAttribute("transform", "translate(0,-44)"); }
-  else { scEl.setAttribute("viewBox", "20 60 350 660"); $("#row").setAttribute("transform", "translate(0,-96)"); $("#rowWaves").removeAttribute("clip-path"); $("#rowWaves").removeAttribute("transform"); } }
+  else { scEl.setAttribute("viewBox", "20 60 350 660");
+    /* finale registration, solved per stage size: the endline is DOM-fixed while
+       the row is bottom-anchored inside the scaled scene, so at shorter stage
+       heights (in-app browsers) the row rises into the endline. Solve the row's
+       translate from the measured endline bottom so the boards land exactly
+       where they sit in the verified 390x844 frame: endline bottom + 72.2px. */
+    const sr = scEl.getBoundingClientRect(), s = Math.max(sr.width/350, sr.height/660), yTop = 720 - sr.height/s;
+    const eb = $("#endline").getBoundingClientRect().bottom;
+    const ty = (eb + 72.2 - sr.top)/s + yTop - 378;
+    $("#row").setAttribute("transform", "translate(0," + ty.toFixed(1) + ")"); $("#rowWaves").removeAttribute("clip-path"); $("#rowWaves").removeAttribute("transform"); } }
 window.addEventListener("resize", fitScene); fitScene();
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitScene);
 
 readScroll(); requestAnimationFrame(frame);
 </script>
